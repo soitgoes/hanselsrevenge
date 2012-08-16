@@ -10,7 +10,7 @@ Include the following script references
 	<!--[if lt IE 8]>
 	<script type="text/javascript" src="json2.js"></script>
 	<![endif]-->
-	<script type="text/javascript" src="/path/to/jquery.hanselsrevenge.js"></script>
+	<script type="text/javascript" src="jquery.hanselsrevenge.js"></script>
 
 
 Have a Breadcrumb structure which resembles the following on the page

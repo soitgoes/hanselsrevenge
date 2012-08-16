@@ -1,4 +1,11 @@
-﻿(function ($) {
+﻿/*
+  CopyWrite 2012, Martin Murphy martin.murphy@whiteboard-it.com
+  http://github.com/soitgoes/hanselsrevenge
+  MIT License
+  http://opensource.org/licenses/mit-license.php
+*/
+
+(function ($) {
   $.fn.hanselsRevenge = function (options) {
     var breadCrumbContainer = $(this);
     var historyStack = [];

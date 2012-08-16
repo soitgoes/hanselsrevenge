@@ -68,5 +68,6 @@
 
 $(function () {
   /*initialize breadcrumbs with a default depth of 3 and inherit the crumbs on the page if there is no cookie*/
-  $(".breadcrumbs").hanselsRevenge({ maxDepth: 3, inheritLandingCrumbs: true }); 
+  $(".breadcrumbs").hanselsRevenge(); 
+  //$(".breadcrumbs").hanselsRevenge({ maxDepth: 3, inheritLandingCrumbs: true, cookieOptions:{path:"/"} }); //example of other options.
 })

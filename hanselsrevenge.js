@@ -20,6 +20,15 @@
     //options contain the cookie expiration if given etc.
     var cookieStack = $.cookie(key);
     var path = window.location.pathname;
+    var clearHistory = function () {
+      $.removeCookie(key, options.cookieOptions);
+    };
+    //if the document.referrer does not match the window.location.domain then clear the history
+    var originPattern= /(https?:\/\/.*?)(\/|$)/;
+    var referrerOrigin= originPattern.exec(document.referrer)[1];
+    if (window.location.origin !== referrerOrigin) {
+      clearHistory();
+    }
 
     if (cookieStack) {
       historyStack = JSON.parse(cookieStack);

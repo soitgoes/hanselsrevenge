@@ -2,6 +2,8 @@
 
 Hansel is a breadcrumb helper which operates in the true fashion of how the fairy tale intended and gives the user a history which does not require them to use their backbutton.
 
+See a demo of how it works.  http://whiteboard-it.com/hanselsrevenge/default.htm
+
 ## Installation
 
 Include the following script references

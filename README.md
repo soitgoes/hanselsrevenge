@@ -28,3 +28,7 @@ You can change the options available there or remove that section and make the c
 * inheritLandingCrumbs when true accepts the starting path implied by the unordered list that is on the page at load time.  When false if the current page is the landing page then it will begin the path there.
 * cookieOptions will accept any option that the $.cookie project can accept in their $.cookie options parameter.  For more information on this have a look at this project.   https://github.com/carhartl/jquery-cookie/
 
+## MIT License
+
+http://www.opensource.org/licenses/mit-license.php
+

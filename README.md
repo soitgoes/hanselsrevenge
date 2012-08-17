@@ -34,7 +34,7 @@ You can change the options available there or remove that section and make the c
 ## Support
 
 * Tested and working in all modern browsers and IE 6+
-_ if you don't care about supportting ie < 8 you can remove the json2 ref
+_ if you don't care about supportting ie < 8 you can remove the json2 ref _
 
 ## Special Thanks To
 

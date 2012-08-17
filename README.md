@@ -34,8 +34,19 @@ You can change the options available there or remove that section and make the c
 ## Support
 
 * Tested and working in all modern browsers and IE 6+
+_ if you don't care about supportting ie < 8 you can remove the json2 ref
+
+## Special Thanks To
+
+* json2 by Douglas Crockford https://github.com/douglascrockford/JSON-js/
+* jquery.cookie by Klaus Hartl https://github.com/carhartl/jquery-cookie
+
 
 ## MIT License
 
 http://www.opensource.org/licenses/mit-license.php
 
+## Author
+
+Martin Murphy 
+http://whiteboard-it.com

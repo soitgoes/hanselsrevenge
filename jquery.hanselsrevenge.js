@@ -24,8 +24,8 @@
       $.removeCookie(key, options.cookieOptions);
     };
     //if the document.referrer does not match the window.location.domain then clear the history
-    var originPattern= /(https?:\/\/.*?)(\/|$)/;
-    var referrerOrigin= originPattern.exec(document.referrer)[1];
+    var originPattern = /(https?:\/\/.*?)(\/|$)/;
+    var referrerOrigin = originPattern.exec(document.referrer)[1];
     if (window.location.origin !== referrerOrigin) {
       clearHistory();
     }
@@ -43,6 +43,10 @@
           historyStack.push({ link: this.href, text: this.innerHTML });
         });
         historyStack.push({ text: document.title, link: path });
+        //TODO:  Ensure that the historyStack never exceeds 50 items
+        if (historyStack.length > 50) {
+          historyStack = historyStack.slice(0, 50);
+        }
         $.cookie(key, JSON.stringify(historyStack), options.cookieOptions);
         return;
       }

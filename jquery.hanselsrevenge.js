@@ -25,7 +25,7 @@
     };
     //if the document.referrer does not match the window.location.domain then clear the history
     var originPattern = /(https?:\/\/.*?)(\/|$)/;
-    var referrerOrigin = originPattern.exec(document.referrer)[1];
+    var referrerOrigin = !document.referrer ? "" : originPattern.exec(document.referrer)[1];
     if (window.location.origin !== referrerOrigin) {
       clearHistory();
     }

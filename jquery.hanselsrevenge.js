@@ -12,16 +12,13 @@
       maxDepth: 5,
       inheritLandingCrumbs: true,
       cookieOptions: {},
+      linkSelector:"a",
       debug : false
     };
     options = $.extend(defaultOptions, options);
     var debug = options.debug;
     //bind to the click event of selected paths and set up all the stack and cookies
-    if (!options.linkSelector && console && console.log)
-    {
-      console.log("Hansels Revenge: No linkSelector option provided")
-      return;
-    }
+    
 
     var breadCrumbContainer = $(this);
     var historyStack = [];
@@ -62,7 +59,7 @@
            }
            return "/";
     }
-
+    //refactor so that all other links (that aren't a anchor jump to blow away the cache)
     var setupClicks  = function(aTag){      
        if (aTag.href && aTag.href.indexOf("#") !==0){ //jump to anchor not supported by design          
          getHistory();  
@@ -73,7 +70,7 @@
             historyStack.push({ text: null, link: relUrl });
           } else {
             var y = historyStack.length - 1;
-            for (; y > 0 && historyStack[y].link != relUrl; y--) { }
+            for (; y >= 0 && historyStack[y].link != relUrl; y--) { }
             historyStack = historyStack.slice(0, y + 1);
           }
          if (debug){
@@ -132,5 +129,5 @@ $(function () {
   /*initialize breadcrumbs with a default depth of 3 and inherit the crumbs on the page if there is no cookie*/
   //$(".breadcrumbs").hanselsRevenge(); 
   // cookieOptions:{path:"/"}
-  $(".breadcrumbs").hanselsRevenge({ maxDepth: 3, inheritLandingCrumbs: true, linkSelector:"#content a, #nav a" , debug:true}); //example of other options.
+  $(".breadcrumbs").hanselsRevenge({ maxDepth: 5, inheritLandingCrumbs: true, linkSelector:"#content a, #nav a" , debug:true}); //example of other options.
 })

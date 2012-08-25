@@ -32,4 +32,5 @@ a:link, a:visited,
 .breadcrumbs li a:hover,
 .breadcrumbs li a:focus {
 	color:#dd2c0d;
+	text-decoration:underline;
 	}

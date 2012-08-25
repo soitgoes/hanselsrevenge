@@ -28,22 +28,27 @@
     var historyHash = {};
     var key = "hanselsrevenge";
     //options contain the cookie expiration if given etc.
-    var cookieStack = $.cookie(key);
-   
-    if (cookieStack){
-      var stringToParse = cookieStack;
-      historyStack =  JSON.parse(stringToParse);
-      if (debug){
-        console.log("JSON parse cookieStack", JSON.stringify(historyStack));  
+    var getHistory = function(){
+       var cookieStack = $.cookie(key);
+      if (cookieStack){
+        var stringToParse = cookieStack;
+        historyStack =  JSON.parse(stringToParse);
+        if (debug){
+          console.log("JSON parse cookieStack", JSON.stringify(historyStack));  
+        }
+        //find the null entry in the history stack where the url matches
+        for (var i = historyStack.length - 1; i >= 0; i--) {
+            if (historyStack[i].text == null && historyStack[i].link ===document.location.pathname){
+              historyStack[i].text = document.title;
+            }
+        }
+        for (var i = 0; i < historyStack.length; i++){
+          historyHash[historyStack[i].link] = null;
+        }
+        $.cookie(key, JSON.stringify(historyStack), options.cookieOptions); //ensure that the cookie is rewritten
       }
-      //find the null entry in the history stack where the url matches
-      for (var i = historyStack.length - 1; i >= 0; i--) {
-          if (historyStack[i].text == null && historyStack[i].link ===document.location.pathname){
-            historyStack[i].text = document.title;
-          }
-      }
-      $.cookie(key, JSON.stringify(historyStack), options.cookieOptions); //ensure that the cookie is rewritten
     }
+   getHistory();
 
     var clearHistory = function () {
       $.removeCookie(key, options.cookieOptions);
@@ -58,23 +63,24 @@
            return "/";
     }
 
-    var setupClicks  = function(aTag){//record the link item to the cookie
-        //rewind if page is higher in the stack.
-        var relUrl = getRelativeUrl(aTag.href);
-        if (historyHash[relUrl] !== null) {
-
-
-        
-          historyStack.push({ text: null, link: relUrl });
-        } else {
-          var y = historyStack.length - 1;
-          for (; y > 0 && historyStack[y].link != relUrl; y--) { }
-          historyStack = historyStack.slice(0, y + 1);
-        }
-       if (debug){
-         console.log("Setting cookie", JSON.stringify(historyStack));
+    var setupClicks  = function(aTag){      
+       if (aTag.href && aTag.href.indexOf("#") !==0){ //jump to anchor not supported by design          
+         getHistory();  
+        //record the link item to the cookie
+          //rewind if page is higher in the stack.
+          var relUrl = getRelativeUrl(aTag.href);
+          if (historyHash[relUrl] !== null) {
+            historyStack.push({ text: null, link: relUrl });
+          } else {
+            var y = historyStack.length - 1;
+            for (; y > 0 && historyStack[y].link != relUrl; y--) { }
+            historyStack = historyStack.slice(0, y + 1);
+          }
+         if (debug){
+           console.log("Setting cookie", JSON.stringify(historyStack));
+         }
+         $.cookie(key, JSON.stringify(historyStack), options.cookieOptions);         
        }
-       $.cookie(key, JSON.stringify(historyStack), options.cookieOptions);
     };
     $("li a" ,breadCrumbContainer).click(
       function(){ setupClicks(this)}
@@ -85,11 +91,11 @@
 
      //content selectors specified get the action.
 
-    if (cookieStack){ //we have information
+    if (historyStack.length > 0){ //we have information
       //write breadcrumbs from cookie
       breadCrumbContainer.html("");
       //if (debug){ console.log("before maxDepth adjustment: ", JSON.stringify(historyStack)); }
-      historyStack = (options.maxDepth >= historyStack.length) ? historyStack : historyStack.slice(0, historyStack.length - options.maxDepth);
+      historyStack = (options.maxDepth >= historyStack.length) ? historyStack : historyStack.slice(historyStack.length - options.maxDepth);
       // if (debug) { console.log("after maxDepth adjustment: " , JSON.stringify(historyStack)); } 
       for (var i = historyStack.length - 1; i >= 0; i--) {
         var item = historyStack.shift();

@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Historical Breadcrumbs</title>
+  <script src="jquery-1.6.1.min.js" type="text/javascript"></script>
+  <script src="jquery.cookie.js" type="text/javascript"></script>
+  <!--[if lt IE 8]>
+<script type="text/javascript" src="json2.js"></script>
+  <![endif]-->
+  <script src="jquery.hanselsrevenge.js" type="text/javascript"></script>
+  <link href="hanselsrevenge.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <ul class="breadcrumbs"><li><a href="/">Home</a></li><li>Revenge of Hansel</li></ul>
+ <ul id="nav">
+    <li><a href="documentation.htm">Documentation </a></li>
+    <li><a href="default.htm">Back Story of Hansel's Revenge</a></li>
+    <li><a href="story.htm">Hansel's Story</a></li>
+    <li><a href="historical_breadcrumbs.htm">What are Historical Breadcrumbs</a></li>
+  </ul>
+
+<hr />
+  <div id="content">
+      <h1>History of Breadcrumb Navigation</h1>
+      <p>
+        I've always been confused as to how companies have gotten breadcrumbs so wrong when the intent is so clear in the naming of it.  I imagine that one prominant site started using them more of a different style navigation in the absense of a left navigation.  Next thing you know there are breadcrumbs on sites that have left navs that are indicating the same structure and no historical significance.  
+      </p>
+      <p>
+        Maybe there were other considerations as well.  If you dynamically render the breadcrumbs on the server side then you can never cache take good advantage of caching.  If the user clicks links in the top navigation then the contextual sense of the path may be destroyed.  In any case, I believe I've answered all these concerns with this project.  I hope you enjoy.
+      </p>
+      <h2>What is a Historical Breadcrumb?</h1>
+      <p>
+        A historical breadcrumb is one that has the users history in the breadcrumb.  This solves the UI problem of the user having to use their back button.  Also in both applications and content web sites this can aid navigation without the extra effort of creating duplicate content or dynamically altering the breadcrumb based on the referrer.
+      </p>
+      <p>
+        Solving this at the client level with javascript means that the dynamic aspect of the breadcrumbs will not interfere with caching and will still produce the desired result for the end user.
+      </p>
+      <h2>What about landing pages?</h2>
+      <p>
+        You are right.  Landing pages are a consideration.  That's why we inherit the breadcrumb structure that is already on the page into our history and begin navigation from there.  Best Practice is to put a reasonable breadcrumb structure on the page but if they are hitting a secondary page let us take it over.  The simpliest way to do this is to simply check for the existance of a "hanselsrevenge" cookie proir to generating your breadcrumb.  If the cookie exists then you can just make sure that the &lt;ul&gt; tag is on the page and we will handle the rest. 
+      </p>
+      <h2>What about different paths within the site?</h2>
+      <p>
+          It is true that there are times that you would like to reset the trial so to speak, when you are in a different category of the  application.   Hansel's revenge does this by allowing you to specify the selector of the anchor tags which you would like to be added to the trial.  (If you want to specify everything it defaults to "a").  
+      </p>
+      <p>
+          Typically you would want the breadcrumb to expand so long as the user is clicking links in the content and in the left navigation.  However, if the user clicked on a top navigation item you would want to reset the trail as the top navigation may land you anywhere on the site in an unrelated path.
+      </p>
+  </div>
+
+  <div id="footer">
+    <p><a href="http://google.com">Google Link</a><p>
+  </div>
+
+</body>
+</html>

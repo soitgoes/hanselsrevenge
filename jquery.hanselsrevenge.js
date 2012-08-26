@@ -71,7 +71,7 @@
           } else {
             var y = historyStack.length - 1;
             for (; y >= 0 && historyStack[y].link != relUrl; y--) { }
-            historyStack = historyStack.slice(0, y + 1);
+            historyStack = y===0 ? [historyStack[0]] :  historyStack.slice(0, y + 1);
           }
          if (debug){
            console.log("Setting cookie", JSON.stringify(historyStack));

@@ -4,7 +4,16 @@
   MIT License
   http://opensource.org/licenses/mit-license.php
 */
-
+jQuery.extend( jQuery.fn, {
+    // Name of our method & one argument (the parent selector)
+    hasParent: function(p) {
+        // Returns a subset of items using jQuery.filter
+        return this.filter(function(){
+            // Return truthy/falsey based on presence in parent
+            return $(p).find(this).length;
+        });
+    }
+});
 
 (function ($) {
   $.fn.hanselsRevenge = function (options) {
@@ -15,6 +24,7 @@
       containerSelector:"html",
       debug : false
     };
+    var containerClick = false;
     options = $.extend(defaultOptions, options);
     var debug = options.debug;
     //bind to the click event of selected paths and set up all the stack and cookies
@@ -25,28 +35,6 @@
     var historyHash = {};
     var key = "hanselsrevenge";
     //options contain the cookie expiration if given etc.
-    var getHistory = function(){
-       var cookieStack = $.cookie(key);
-      if (cookieStack){
-        var stringToParse = cookieStack;
-        historyStack =  JSON.parse(stringToParse);
-        if (debug){
-          console.log("JSON parse cookieStack", JSON.stringify(historyStack));  
-        }
-        //find the null entry in the history stack where the url matches
-        for (var i = historyStack.length - 1; i >= 0; i--) {
-            if (historyStack[i].text == null && historyStack[i].link ===document.location.pathname){
-              historyStack[i].text = document.title;
-            }
-        }
-        for (var i = 0; i < historyStack.length; i++){
-          historyHash[historyStack[i].link] = null;
-        }
-        $.cookie(key, JSON.stringify(historyStack), options.cookieOptions); //ensure that the cookie is rewritten
-      }
-    }
-   getHistory();
-
     var clearHistory = function () {
       $.removeCookie(key, options.cookieOptions);
     };
@@ -66,12 +54,53 @@
            }
            return "/";
     }
+
+    if (document.location.origin != getOrigin(document.referrer)){ //changing protocols or coming in from another site then the trial should be cleared.
+      if (debug) {console.log("Origin change detected, clearing history");}
+      clearHistory();
+    }
+
+    var rewindHistoryTo = function(relUrl){
+        var y = historyStack.length - 1;
+        for (; y >= 0 && historyStack[y].link != relUrl; y--) { }
+        historyStack = y===0 ? [historyStack[0]] :  historyStack.slice(0, y + 1);
+    };
+    var getHistory = function(){
+       var cookieStack = $.cookie(key);
+      if (cookieStack){
+        var stringToParse = cookieStack;
+        historyStack =  JSON.parse(stringToParse);
+        if (debug){
+          console.log("JSON parse cookieStack", JSON.stringify(historyStack));  
+        }
+        //find the null entry in the history stack where the url matches
+        for (var i = historyStack.length - 1; i >= 0; i--) {
+            if (historyStack[i].text == null && historyStack[i].link ===document.location.pathname){
+              historyStack[i].text = document.title;
+            }
+        }
+
+        //rewind if necessary
+        rewindHistoryTo(document.location.pathname);
+ 
+        for (var i = 0; i < historyStack.length; i++){
+          historyHash[historyStack[i].link] = null;
+        }
+        $.cookie(key, JSON.stringify(historyStack), options.cookieOptions); //ensure that the cookie is rewritten
+      }
+    }
+   getHistory();
+  
+
+   
+   
     //refactor so that all other links (that aren't a anchor jump to blow away the cache)
     var setupClicks  = function(aTag){      
          
        if (aTag.href && aTag.href.indexOf("#") !==0){ //jump to anchor not supported by design          
          //if a has a parent of the selector or is in the breadcrumb container do this
          if ($(aTag).hasParent(options.containerSelector) || $(aTag).hasParent(breadCrumbContainer.data('selector'))){
+           containerClick = true;
            var origin = getOrigin(aTag.href);
            if (origin === document.location.origin){
              getHistory();  
@@ -81,18 +110,18 @@
               if (historyHash[relUrl] !== null) {
                 historyStack.push({ text: null, link: relUrl });
               } else {
-                var y = historyStack.length - 1;
-                for (; y >= 0 && historyStack[y].link != relUrl; y--) { }
-                historyStack = y===0 ? [historyStack[0]] :  historyStack.slice(0, y + 1);
+                rewindHistoryTo(relUrl);
               }
              if (debug){
                console.log("Setting cookie", JSON.stringify(historyStack));
              }
              $.cookie(key, JSON.stringify(historyStack), options.cookieOptions);                    
            }else{        
+              if (debug) {console.log("Leaving the site: " + aTag.href);}
               clearHistory(); //if you click a link which leaves the site then the history should start over.
            }
          }else{
+            if (debug) {console.log("Clicking a non-tracked link: " + aTag.href);}
             clearHistory(); //All other link reset the breadcrumbs.           
          }        
        }

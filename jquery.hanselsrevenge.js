@@ -12,7 +12,7 @@
       maxDepth: 5,
       inheritLandingCrumbs: true,
       cookieOptions: {},
-      linkSelector:"a",
+      containerSelector:"html",
       debug : false
     };
     options = $.extend(defaultOptions, options);
@@ -68,37 +68,39 @@
     }
     //refactor so that all other links (that aren't a anchor jump to blow away the cache)
     var setupClicks  = function(aTag){      
-       
+         
        if (aTag.href && aTag.href.indexOf("#") !==0){ //jump to anchor not supported by design          
-         var origin = getOrigin(aTag.href);
-         if (origin === document.location.origin){
-           getHistory();  
-          //record the link item to the cookie
-            //rewind if page is higher in the stack.
-            var relUrl = getRelativeUrl(aTag.href);
-            if (historyHash[relUrl] !== null) {
-              historyStack.push({ text: null, link: relUrl });
-            } else {
-              var y = historyStack.length - 1;
-              for (; y >= 0 && historyStack[y].link != relUrl; y--) { }
-              historyStack = y===0 ? [historyStack[0]] :  historyStack.slice(0, y + 1);
-            }
-           if (debug){
-             console.log("Setting cookie", JSON.stringify(historyStack));
+         //if a has a parent of the selector or is in the breadcrumb container do this
+         if ($(aTag).hasParent(options.containerSelector) || $(aTag).hasParent(breadCrumbContainer.data('selector'))){
+           var origin = getOrigin(aTag.href);
+           if (origin === document.location.origin){
+             getHistory();  
+            //record the link item to the cookie
+              //rewind if page is higher in the stack.
+              var relUrl = getRelativeUrl(aTag.href);
+              if (historyHash[relUrl] !== null) {
+                historyStack.push({ text: null, link: relUrl });
+              } else {
+                var y = historyStack.length - 1;
+                for (; y >= 0 && historyStack[y].link != relUrl; y--) { }
+                historyStack = y===0 ? [historyStack[0]] :  historyStack.slice(0, y + 1);
+              }
+             if (debug){
+               console.log("Setting cookie", JSON.stringify(historyStack));
+             }
+             $.cookie(key, JSON.stringify(historyStack), options.cookieOptions);                    
+           }else{        
+              clearHistory(); //if you click a link which leaves the site then the history should start over.
            }
-           $.cookie(key, JSON.stringify(historyStack), options.cookieOptions);                    
-         }else{        
-            clearHistory(); //if you click a link which leaves the site then the history should start over.
-         }
+         }else{
+            clearHistory(); //All other link reset the breadcrumbs.           
+         }        
        }
     };
-    $("li a" ,breadCrumbContainer).click(
+    $("a").click(
       function(){ setupClicks(this)}
     ); //breadcrumb links get the actions
-    $(options.linkSelector).click(
-      function(){ setupClicks(this)}
-    );
-
+    
      //content selectors specified get the action.
 
     if (historyStack.length > 0){ //we have information
@@ -142,5 +144,5 @@ $(function () {
   /*initialize breadcrumbs with a default depth of 3 and inherit the crumbs on the page if there is no cookie*/
   //$(".breadcrumbs").hanselsRevenge(); 
   // cookieOptions:{path:"/"}
-  $(".breadcrumbs").hanselsRevenge({ maxDepth: 5, inheritLandingCrumbs: true, linkSelector:"#content a, #nav a" , debug:true}); //example of other options.
+  $(".breadcrumbs").hanselsRevenge({ maxDepth: 5, inheritLandingCrumbs: true, containerSelector:"#content, #nav" , debug:true}); //example of other options.
 })

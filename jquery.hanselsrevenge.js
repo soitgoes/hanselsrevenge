@@ -50,7 +50,14 @@
     var clearHistory = function () {
       $.removeCookie(key, options.cookieOptions);
     };
-
+    var getOrigin = function(absUrl){
+      var originPattern = /(https?:\/\/.*?)(\/|$)/;
+      var result = originPattern.exec(absUrl);
+      if (result && result.length > 0){
+        return result[1];
+      }
+      return "";
+    }
     var getRelativeUrl = function(absUrl){
          var originPattern = /https?:\/\/.*?(\/.*?)($|\?|#)/;
            var result = originPattern.exec(absUrl);
@@ -61,22 +68,28 @@
     }
     //refactor so that all other links (that aren't a anchor jump to blow away the cache)
     var setupClicks  = function(aTag){      
+       
        if (aTag.href && aTag.href.indexOf("#") !==0){ //jump to anchor not supported by design          
-         getHistory();  
-        //record the link item to the cookie
-          //rewind if page is higher in the stack.
-          var relUrl = getRelativeUrl(aTag.href);
-          if (historyHash[relUrl] !== null) {
-            historyStack.push({ text: null, link: relUrl });
-          } else {
-            var y = historyStack.length - 1;
-            for (; y >= 0 && historyStack[y].link != relUrl; y--) { }
-            historyStack = y===0 ? [historyStack[0]] :  historyStack.slice(0, y + 1);
-          }
-         if (debug){
-           console.log("Setting cookie", JSON.stringify(historyStack));
+         var origin = getOrigin(aTag.href);
+         if (origin === document.location.origin){
+           getHistory();  
+          //record the link item to the cookie
+            //rewind if page is higher in the stack.
+            var relUrl = getRelativeUrl(aTag.href);
+            if (historyHash[relUrl] !== null) {
+              historyStack.push({ text: null, link: relUrl });
+            } else {
+              var y = historyStack.length - 1;
+              for (; y >= 0 && historyStack[y].link != relUrl; y--) { }
+              historyStack = y===0 ? [historyStack[0]] :  historyStack.slice(0, y + 1);
+            }
+           if (debug){
+             console.log("Setting cookie", JSON.stringify(historyStack));
+           }
+           $.cookie(key, JSON.stringify(historyStack), options.cookieOptions);                    
+         }else{        
+            clearHistory(); //if you click a link which leaves the site then the history should start over.
          }
-         $.cookie(key, JSON.stringify(historyStack), options.cookieOptions);         
        }
     };
     $("li a" ,breadCrumbContainer).click(

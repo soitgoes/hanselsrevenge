@@ -55,9 +55,13 @@ function BreadCrumbTrail(options){
 (function ($) {  
   $.fn.hanselsRevenge = function (options) {
     var breadCrumb = new BreadCrumbTrail(options);
-    var bcContainer = this;
+    var bcContainer = $(options.breadCrumbSelector);
     var cookieKey = "hanselsrevenge";
     
+    if (options.debug && bcContainer.length < 1){
+      console.log("No breadcrumbs found for: " + options.breadCrumbSelector);
+    }
+
     var getOrigin = function(absUrl){
       var originPattern = /(https?:\/\/.*?)(\/|$)/;
       var result = originPattern.exec(absUrl);
@@ -103,18 +107,22 @@ function BreadCrumbTrail(options){
     breadCrumb.push({link:document.location.pathname, text:document.title});
     if (breadCrumb.trail.length > 0){
       $.cookie(cookieKey, JSON.stringify(breadCrumb.trail), options.cookieOptions);
-      bcContainer.html("");
-      var depth = breadCrumb.trail.length > options.maxDepth ? options.maxDepth  : breadCrumb.trail.length;
-      for (var i = depth-1; i >= 0; i--) {
-            var item =  breadCrumb.trail.shift();
-            (i == 0) ? bcContainer.append("<li>" + item.text + "</li>") : bcContainer.append("<li><a href='" + item.link + "'>" + item.text + "</a></li>");
-      }      
+      if (bcContainer.length > 0){
+        bcContainer.html("");
+        var depth = breadCrumb.trail.length > options.maxDepth ? options.maxDepth  : breadCrumb.trail.length;
+        for (var i = depth-1; i >= 0; i--) {
+              var item =  breadCrumb.trail.shift();
+              (i == 0) ? bcContainer.append("<li>" + item.text + "</li>") : bcContainer.append("<li><a href='" + item.link + "'>" + item.text + "</a></li>");
+        }
+      }            
     }
   };
 })(jQuery);
-$(".breadcrumbs").ready(function(){
+var breadCrumbSelector = ".breadcrumbs";
+$(breadCrumbSelector).ready(function(){
   /*initialize breadcrumbs with a default depth of 3 and inherit the crumbs on the page if there is no cookie*/
   //$(".breadcrumbs").hanselsRevenge(); 
   // cookieOptions:{path:"/"}
-  $(".breadcrumbs").hanselsRevenge({ maxDepth: 5, inheritLandingCrumbs: true, resetContainer:$("#content"), resetPattern: /(.*?)bread(.*?)/ , debug:true}); //example of other options.
+ // $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, inheritLandingCrumbs: true, resetContainer:$("#content"), resetPattern: /(.*?)bread(.*?)/ , debug:true})
+  $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, inheritLandingCrumbs: true, debug:true})
 })

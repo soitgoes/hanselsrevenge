@@ -13,6 +13,7 @@ jQuery.extend( jQuery.fn, {
 
 function BreadCrumbTrail(options){
   var defaultOptions = {
+      breadCrumbSelector:".breadcrumbs",
       maxDepth: 5,
       inheritLandingCrumbs: true,
       cookieOptions: {},
@@ -57,6 +58,13 @@ function BreadCrumbTrail(options){
     var breadCrumb = new BreadCrumbTrail(options);
     var bcContainer = $(options.breadCrumbSelector);
     var cookieKey = "hanselsrevenge";
+
+
+    var log = function(mesg){
+      if (console && console.log && options.debug){
+        console.log(mesg);
+      }
+    }
     
     if (options.debug && bcContainer.length < 1){
       console.log("No breadcrumbs found for: " + options.breadCrumbSelector);
@@ -85,6 +93,7 @@ function BreadCrumbTrail(options){
         || $(this).hasParent(options.resetContainer) 
         || (options.resetPattern !==undefined) ? this.href.match(options.resetPattern) : false)
       ){
+        log("clearing breadcrumb trail");
         $.removeCookie(cookieKey, options.cookieOptions);      
       }
     })
@@ -118,11 +127,12 @@ function BreadCrumbTrail(options){
     }
   };
 })(jQuery);
+
 var breadCrumbSelector = ".breadcrumbs";
 $(breadCrumbSelector).ready(function(){
   /*initialize breadcrumbs with a default depth of 3 and inherit the crumbs on the page if there is no cookie*/
   //$(".breadcrumbs").hanselsRevenge(); 
   // cookieOptions:{path:"/"}
  // $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, inheritLandingCrumbs: true, resetContainer:$("#content"), resetPattern: /(.*?)bread(.*?)/ , debug:true})
-  $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, inheritLandingCrumbs: true, debug:true})
+  $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5})
 })

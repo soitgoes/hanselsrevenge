@@ -1,13 +1,33 @@
-﻿/* Simple scalable breadcrumb by Veerle Pieters  http://veerle-v2.duoh.com/blog/comments/simple_scalable_css_based_breadcrumbs/
+﻿/* Simple scalable breadcrumb by Veerle Pieters  http://veerle-v2.duoh.com/blog/comments/simple_scalable_css_based_breadcrumbs/ MODIFIED
 ------------------------------------------------------------------*/
 body {
 	font:71%/165% "Lucida Grande", Lucida, Verdana, sans-serif;
+		background:url(images/hansels_revenge.jpg) no-repeat ;
+		padding-top:160px;
 	}
-ul, li {
+div#content{
+	float:left;	
+	margin-left:250px;
+	margin-right:10px;
+}
+#nav{
+	float:left;
+	width:250px;
+	margin-left:-100%;
+	padding-top:15px;
+}
+dt{font-weight:bold;}
+#footer{
+	clear:both;
+}
+ul, ul li {
 	list-style-type:none;
 	padding:0;
 	margin:0;
 	}		
+
+/* styles for breadcrumbs */
+
 .breadcrumbs {
 	height:2.3em;
 	border:1px solid #dedede;
@@ -16,6 +36,7 @@ ul, li {
 	float:left;
 	line-height:2.3em;
 	color:#777;
+	list-style-type:none;
 	padding-left:.75em;
 	}		
 .breadcrumbs li a {

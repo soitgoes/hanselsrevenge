@@ -97,7 +97,15 @@ function BreadCrumbTrail(options){
         $.removeCookie(cookieKey, options.cookieOptions);      
       }
     })
-
+    var getTitle = function(){
+      if (document.title)
+        return document.title;
+      var path = document.location.pathname;
+      if (path[path.length-1] === '/'){
+        path = path.substring(0, path.length -1); //remove trailing slash
+      }
+      return path.split('/').pop();
+    }
     var val = $.cookie(cookieKey);
     if (val === null){
       if (options.inheritLandingCrumbs){
@@ -113,7 +121,7 @@ function BreadCrumbTrail(options){
     }else{
       breadCrumb.init(JSON.parse(val));
     }
-    breadCrumb.push({link:document.location.pathname, text:document.title});
+    breadCrumb.push({link:document.location.pathname, text:getTitle()});
     if (breadCrumb.trail.length > 0){
       $.cookie(cookieKey, JSON.stringify(breadCrumb.trail), options.cookieOptions);
       if (bcContainer.length > 0){

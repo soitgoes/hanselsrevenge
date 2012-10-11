@@ -7,13 +7,12 @@ body {
 	}
 div#content{
 	float:left;	
-	margin-left:250px;
 	margin-right:10px;
+	max-width:500px;
 }
 #nav{
 	float:left;
 	width:250px;
-	margin-left:-100%;
 	padding-top:15px;
 }
 dt{font-weight:bold;}

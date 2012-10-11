@@ -89,7 +89,7 @@ function BreadCrumbTrail(options){
     }
     $("a").click(function(){
       //external links clear the cookie
-      if (this.href && (getOrigin(this.href) !== document.location.origin 
+      if (this.href && (getOrigin(this.href) !== document.location.protocol + "//" + document.location.host
         || $(this).hasParent(options.resetContainer) 
         || (options.resetPattern !==undefined) ? this.href.match(options.resetPattern) : false)
       ){
@@ -142,5 +142,5 @@ $(breadCrumbSelector).ready(function(){
   //$(".breadcrumbs").hanselsRevenge(); 
   // cookieOptions:{path:"/"}
  // $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, inheritLandingCrumbs: true, resetContainer:$("#content"), resetPattern: /(.*?)bread(.*?)/ , debug:true})
-  $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5})
+  $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, debug:false, cookieOptions:{path:"/"}})
 })

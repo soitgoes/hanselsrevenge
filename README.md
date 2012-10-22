@@ -16,7 +16,8 @@ Include the following script references
 	<script type="text/javascript" src="jquery.hanselsrevenge.js"></script>
 
 
-Have a Breadcrumb structure which resembles the following on the page
+Have a Breadcrumb structure which resembles the following on the page.  
+If inheritBreadCrumbs is set to true then this will default the breadCrumb trail to this path.
 	
 	<ul class="breadcrumbs"><li><a href="/path/to/landing/crumb">Home</a></li></ul>
 
@@ -32,9 +33,10 @@ If you would like to explore some of the other options available to hansels then
 
 You can change the options available there or remove that section and make the call to hanselsRevenge on your page with whatever options you like.
 
-* maxDepth is the maximum displayed depth that a cookie path can go
-* inheritLandingCrumbs when true accepts the starting path implied by the unordered list that is on the page at load time.	When false if the current page is the landing page then it will begin the path there.
-* cookieOptions will accept any option that the $.cookie project can accept in their $.cookie options parameter.	For more information on this have a look at this project.	 https://github.com/carhartl/jquery-cookie/
+* __maxDepth__ is the maximum displayed depth that a cookie path can go
+* __inheritLandingCrumbs__ when true accepts the starting path implied by the unordered list that is on the page at load time.	When false if the current page is the landing page then it will begin the path there.
+* __defaultTrail__ is an array with the default trail.  *only applies if inherit is false*
+* __cookieOptions__ will accept any option that the $.cookie project can accept in their $.cookie options parameter.	For more information on this have a look at this project.	 https://github.com/carhartl/jquery-cookie/
 
 ## Support
 

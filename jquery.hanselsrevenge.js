@@ -117,6 +117,8 @@ function BreadCrumbTrail(options){
         if (last){
           breadCrumb.push({link:document.location.pathname, text: last[0].innerHTML});
         }        
+      }else{
+        breadCrumb.init(options.defaultTrail || []);
       }
     }else{
       breadCrumb.init(JSON.parse(val));

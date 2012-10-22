@@ -7,17 +7,17 @@ See a demo of how it works.  http://whiteboard-it.com/hanselsrevenge/default.htm
 ## Installation
 
 Include the following script references
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-	<script src="jquery.cookie.js" type="text/javascript"></script>
-	<!--[if lt IE 8]>
-	<script type="text/javascript" src="json2.js"></script>
-	<![endif]-->
-	<script type="text/javascript" src="jquery.hanselsrevenge.js"></script>
+	&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"&gt;&lt;/script&gt;
+	&lt;script src="jquery.cookie.js" type="text/javascript"&gt;&lt;/script&gt;
+	&lt;!--[if lt IE 8]&gt;
+	&lt;script type="text/javascript" src="json2.js"&gt;&lt;/script&gt;
+	&lt;![endif]--&gt;
+	&lt;script type="text/javascript" src="jquery.hanselsrevenge.js"&gt;&lt;/script&gt;
 
 
 Have a Breadcrumb structure which resembles the following on the page
 	
-	<ul class="breadcrumbs"><li><a href="/path/to/landing/crumb">Home</a></li></ul>
+	&lt;ul class="breadcrumbs">&lt;li>&lt;a href="/path/to/landing/crumb">Home&lt;/a>&lt;/li>&lt;/ul>
 
 That's it in order to get the default functionality.
 
@@ -38,7 +38,7 @@ You can change the options available there or remove that section and make the c
 ## Support
 
 * Tested and working in all modern browsers and IE 6+
-* *if you don't care about supportting ie < 8 you can remove the json2 ref*
+* *if you don't care about supportting ie &lt; 8 you can remove the json2 ref*
 
 ## Special Thanks To
 

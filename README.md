@@ -10,7 +10,7 @@ Include the following script references
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 	<script src="jquery.cookie.js" type="text/javascript"></script>
-	<!--[if lt IE 8]>
+	<!--[if lt IE 9]>
 	<script type="text/javascript" src="json2.js"></script>
 	<![endif]-->
 	<script type="text/javascript" src="jquery.hanselsrevenge.js"></script>

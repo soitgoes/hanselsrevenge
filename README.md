@@ -22,8 +22,11 @@ Have a Breadcrumb structure which resembles the following on the page
 That's it in order to get the default functionality.
 
 If you would like to explore some of the other options available to hansels then have a look at the bottom of jquery.hanselsrevenge.js 
-
-	$(".breadcrumbs").hanselsRevenge({ maxDepth: 3, inheritLandingCrumbs: true, cookieOptions:{path:"/"} }); 
+	var breadCrumbSelector = ".breadcrumbs";
+	$(breadCrumbSelector).ready(function(){
+	  $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, debug:false, cookieOptions:{path:"/"}})
+	})
+	
 
 You can change the options available there or remove that section and make the call to hanselsRevenge on your page with whatever options you like.
 

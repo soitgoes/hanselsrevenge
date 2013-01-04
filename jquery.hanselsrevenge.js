@@ -17,12 +17,14 @@ function BreadCrumbTrail(options){
       maxDepth: 5,
       inheritLandingCrumbs: true,
       cookieOptions: {},
-      debug : false
+      debug : false,
+      titleCallback : null
+
     };
-  this.options = $.extend(defaultOptions, options);
-  this.trail = [];    
+  this.options = jQuery.extend(defaultOptions, options);
+  this.trail = [];
   this.links = {};
-  
+
   this.push = function(crumb){
       if (this.links[crumb.link] !== true){
         this.trail.push(crumb);
@@ -45,27 +47,26 @@ function BreadCrumbTrail(options){
       this.links[trail[i].link] = true;
     }
   }
-  
+
   this.rewindToUrl = function(relUrl){
     var y = this.trail.length - 1;
     for (; y >= 0 && this.trail[y].link != relUrl; y--) { }
-    this.trail = y===0 ? [this.trail[0]] :  this.trail.slice(0, y + 1);    
+    this.trail = y===0 ? [this.trail[0]] :  this.trail.slice(0, y + 1);
   }
-  
+
 }
-(function ($) {  
+(function ($) {
   $.fn.hanselsRevenge = function (options) {
     var breadCrumb = new BreadCrumbTrail(options);
     var bcContainer = $(options.breadCrumbSelector);
     var cookieKey = "hanselsrevenge";
-
 
     var log = function(mesg){
       if (console && console.log && options.debug){
         console.log(mesg);
       }
     }
-    
+
     if (options.debug && bcContainer.length < 1){
       console.log("No breadcrumbs found for: " + options.breadCrumbSelector);
     }
@@ -94,10 +95,13 @@ function BreadCrumbTrail(options){
         || (options.resetPattern !==undefined) ? this.href.match(options.resetPattern) : false)
       ){
         log("clearing breadcrumb trail");
-        $.removeCookie(cookieKey, options.cookieOptions);      
+        $.removeCookie(cookieKey, options.cookieOptions);
       }
     })
     var getTitle = function(){
+      if (typeof breadCrumb.options.titleCallback == "function") {
+        return breadCrumb.options.titleCallback();
+      }
       if (document.title)
         return document.title;
       var path = document.location.pathname;
@@ -116,7 +120,7 @@ function BreadCrumbTrail(options){
         var last = $("li:last-child", bcContainer);
         if (last){
           breadCrumb.push({link:document.location.pathname, text: last[0].innerHTML});
-        }        
+        }
       }else{
         breadCrumb.init(options.defaultTrail || []);
       }
@@ -133,16 +137,7 @@ function BreadCrumbTrail(options){
               var item =  breadCrumb.trail.shift();
               (i == 0) ? bcContainer.append("<li>" + item.text + "</li>") : bcContainer.append("<li><a href='" + item.link + "'>" + item.text + "</a></li>");
         }
-      }            
+      }
     }
   };
 })(jQuery);
-
-var breadCrumbSelector = ".breadcrumbs";
-$(breadCrumbSelector).ready(function(){
-  /*initialize breadcrumbs with a default depth of 3 and inherit the crumbs on the page if there is no cookie*/
-  //$(".breadcrumbs").hanselsRevenge(); 
-  // cookieOptions:{path:"/"}
- // $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, inheritLandingCrumbs: true, resetContainer:$("#content"), resetPattern: /(.*?)bread(.*?)/ , debug:true})
-  $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, debug:false, cookieOptions:{path:"/"}})
-})

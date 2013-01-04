@@ -9,6 +9,12 @@
 <script type="text/javascript" src="json2.js"></script>
   <![endif]-->
   <script src="jquery.hanselsrevenge.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var breadCrumbSelector = ".breadcrumbs";
+    $(document).ready(function(){
+      $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, debug:false, cookieOptions:{path:"/"}});
+    });
+  </script>
   <link href="hanselsrevenge.css" rel="stylesheet" type="text/css" />
 </head>
 <body>

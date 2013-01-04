@@ -137,12 +137,3 @@ function BreadCrumbTrail(options){
     }
   };
 })(jQuery);
-
-var breadCrumbSelector = ".breadcrumbs";
-$(breadCrumbSelector).ready(function(){
-  /*initialize breadcrumbs with a default depth of 3 and inherit the crumbs on the page if there is no cookie*/
-  //$(".breadcrumbs").hanselsRevenge(); 
-  // cookieOptions:{path:"/"}
- // $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, inheritLandingCrumbs: true, resetContainer:$("#content"), resetPattern: /(.*?)bread(.*?)/ , debug:true})
-  $.fn.hanselsRevenge({breadCrumbSelector:breadCrumbSelector, maxDepth: 5, debug:false, cookieOptions:{path:"/"}})
-})

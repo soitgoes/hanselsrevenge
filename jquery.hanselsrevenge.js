@@ -19,7 +19,7 @@ function BreadCrumbTrail(options){
       cookieOptions: {},
       debug : false
     };
-  this.options = $.extend(defaultOptions, options);
+  this.options = jQuery.extend(defaultOptions, options);
   this.trail = [];    
   this.links = {};
   

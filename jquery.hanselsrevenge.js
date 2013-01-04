@@ -17,7 +17,9 @@ function BreadCrumbTrail(options){
       maxDepth: 5,
       inheritLandingCrumbs: true,
       cookieOptions: {},
-      debug : false
+      debug : false,
+      titleCallback : null
+
     };
   this.options = jQuery.extend(defaultOptions, options);
   this.trail = [];
@@ -97,6 +99,9 @@ function BreadCrumbTrail(options){
       }
     })
     var getTitle = function(){
+      if (typeof breadCrumb.options.titleCallback == "function") {
+        return breadCrumb.options.titleCallback();
+      }
       if (document.title)
         return document.title;
       var path = document.location.pathname;

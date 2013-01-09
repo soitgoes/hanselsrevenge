@@ -58,8 +58,8 @@ function BreadCrumbTrail(options){
 (function ($) {
   $.fn.hanselsRevenge = function (options) {
     var breadCrumb = new BreadCrumbTrail(options);
-    var bcContainer = $(options.breadCrumbSelector);
     var cookieKey = "hanselsrevenge";
+    var bcContainer = this;
 
     var log = function(mesg){
       if (console && console.log && options.debug){

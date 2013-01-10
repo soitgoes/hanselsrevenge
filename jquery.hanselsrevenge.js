@@ -7,7 +7,7 @@
 jQuery.extend( jQuery.fn, {
     // Name of our method & one argument (the parent selector)
     hasParent: function(p) {
-        return $(p).find(this).length > 0;
+        return jQuery(p).find(this).length > 0;
     }
 });
 

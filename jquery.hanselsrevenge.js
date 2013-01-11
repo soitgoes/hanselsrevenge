@@ -103,8 +103,13 @@ function BreadCrumbTrail(options){
       if (typeof breadCrumb.options.titleCallback == "function") {
         return breadCrumb.options.titleCallback();
       }
-      if (document.title)
-        return document.title;
+      if (document.title) {
+        // Document title can infact contain JavaScript vulnerabilities,
+        // therefore we convert the html to text through an element inorder not
+        // to trigger the JavaScript.
+        title = $('<title>').text(document.title);
+        return title.get(0).innerHTML;
+      }
       var path = document.location.pathname;
       if (path[path.length-1] === '/'){
         path = path.substring(0, path.length -1); //remove trailing slash

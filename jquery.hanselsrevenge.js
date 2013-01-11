@@ -60,6 +60,7 @@ function BreadCrumbTrail(options){
     var breadCrumb = new BreadCrumbTrail(options);
     var cookieKey = "hanselsrevenge";
     var bcContainer = this;
+    options = breadCrumb.options;
 
     var log = function(mesg){
       if (console && console.log && options.debug){

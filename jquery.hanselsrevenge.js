@@ -59,7 +59,15 @@ function BreadCrumbTrail(options){
   $.fn.hanselsRevenge = function (options) {
     var breadCrumb = new BreadCrumbTrail(options);
     var cookieKey = "hanselsrevenge";
-    var bcContainer = this;
+    // If the library is called by $.fn.hanselsRevenge, then the library
+    // expects the option.breadCrumbSelector to be passed. Otherwise use the
+    // standard $(selector).hanselsRevenge();
+    if (!this.selector) {
+      var bcContainer = $(options.breadCrumbSelector);
+    }
+    else {
+      var bcContainer = this;
+    }
     options = breadCrumb.options;
 
     var log = function(mesg){

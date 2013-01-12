@@ -13,12 +13,14 @@ jQuery.extend( jQuery.fn, {
 
 function BreadCrumbTrail(options){
   var defaultOptions = {
-      breadCrumbSelector:".breadcrumbs",
+      breadCrumbSelector: "",
       maxDepth: 5,
       inheritLandingCrumbs: true,
-      cookieOptions: {},
-      debug : false,
-      titleCallback : null
+      cookieOptions: {
+        path: "/"
+      },
+      debug: false,
+      titleCallback: null
 
     };
   this.options = jQuery.extend(defaultOptions, options);

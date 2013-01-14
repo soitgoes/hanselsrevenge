@@ -7,18 +7,20 @@
 jQuery.extend( jQuery.fn, {
     // Name of our method & one argument (the parent selector)
     hasParent: function(p) {
-        return $(p).find(this).length > 0;
+        return jQuery(p).find(this).length > 0;
     }
 });
 
 function BreadCrumbTrail(options){
   var defaultOptions = {
-      breadCrumbSelector:".breadcrumbs",
+      breadCrumbSelector: "",
       maxDepth: 5,
       inheritLandingCrumbs: true,
-      cookieOptions: {},
-      debug : false,
-      titleCallback : null
+      cookieOptions: {
+        path: "/"
+      },
+      debug: false,
+      titleCallback: null
 
     };
   this.options = jQuery.extend(defaultOptions, options);
@@ -58,8 +60,17 @@ function BreadCrumbTrail(options){
 (function ($) {
   $.fn.hanselsRevenge = function (options) {
     var breadCrumb = new BreadCrumbTrail(options);
-    var bcContainer = $(options.breadCrumbSelector);
     var cookieKey = "hanselsrevenge";
+    // If the library is called by $.fn.hanselsRevenge, then the library
+    // expects the option.breadCrumbSelector to be passed. Otherwise use the
+    // standard $(selector).hanselsRevenge();
+    if (!this.selector) {
+      var bcContainer = $(options.breadCrumbSelector);
+    }
+    else {
+      var bcContainer = this;
+    }
+    options = breadCrumb.options;
 
     var log = function(mesg){
       if (console && console.log && options.debug){
@@ -102,8 +113,13 @@ function BreadCrumbTrail(options){
       if (typeof breadCrumb.options.titleCallback == "function") {
         return breadCrumb.options.titleCallback();
       }
-      if (document.title)
-        return document.title;
+      if (document.title) {
+        // Document title can infact contain JavaScript vulnerabilities,
+        // therefore we convert the html to text through an element inorder not
+        // to trigger the JavaScript.
+        title = $('<title>').text(document.title);
+        return title.get(0).innerHTML;
+      }
       var path = document.location.pathname;
       if (path[path.length-1] === '/'){
         path = path.substring(0, path.length -1); //remove trailing slash

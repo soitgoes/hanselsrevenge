@@ -117,7 +117,7 @@ function BreadCrumbTrail(options){
         // Document title can infact contain JavaScript vulnerabilities,
         // therefore we convert the html to text through an element inorder not
         // to trigger the JavaScript.
-        title = $('<title>').text(document.title);
+        var title = $('<title>').text(document.title);
         return title.get(0).innerHTML;
       }
       var path = document.location.pathname;

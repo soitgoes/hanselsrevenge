@@ -72,14 +72,14 @@ function BreadCrumbTrail(options){
     }
     options = breadCrumb.options;
 
-    var log = function(mesg){
-      if (console && console.log && options.debug){
+    var log = function(mesg) {
+      if (options.debug && typeof console !== "undefined" && console.log) {
         console.log(mesg);
       }
     }
 
-    if (options.debug && bcContainer.length < 1){
-      console.log("No breadcrumbs found for: " + options.breadCrumbSelector);
+    if (options.debug && bcContainer.length < 1) {
+      log("No breadcrumbs found for: " + options.breadCrumbSelector);
     }
 
     var getOrigin = function(absUrl){

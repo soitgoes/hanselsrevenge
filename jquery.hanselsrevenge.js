@@ -143,7 +143,8 @@ function BreadCrumbTrail(options){
     }else{
       breadCrumb.init(JSON.parse(val));
     }
-    breadCrumb.push({link:document.location.pathname, text:getTitle()});
+    path = document.location.pathname + document.location.search + document.location.hash;
+    breadCrumb.push({link:path, text:getTitle()});
     if (breadCrumb.trail.length > 0){
       $.cookie(cookieKey, JSON.stringify(breadCrumb.trail), options.cookieOptions);
       if (bcContainer.length > 0){

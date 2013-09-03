@@ -16,6 +16,7 @@ function BreadCrumbTrail(options){
       breadCrumbSelector: "",
       maxDepth: 5,
       inheritLandingCrumbs: true,
+      allowURIQuery : false,
       cookieOptions: {
         path: "/"
       },
@@ -72,14 +73,14 @@ function BreadCrumbTrail(options){
     }
     options = breadCrumb.options;
 
-    var log = function(mesg){
-      if (console && console.log && options.debug){
+    var log = function(mesg) {
+      if (options.debug && typeof console !== "undefined" && console.log) {
         console.log(mesg);
       }
     }
 
-    if (options.debug && bcContainer.length < 1){
-      console.log("No breadcrumbs found for: " + options.breadCrumbSelector);
+    if (options.debug && bcContainer.length < 1) {
+      log("No breadcrumbs found for: " + options.breadCrumbSelector);
     }
 
     var getOrigin = function(absUrl){
@@ -143,7 +144,11 @@ function BreadCrumbTrail(options){
     }else{
       breadCrumb.init(JSON.parse(val));
     }
-    breadCrumb.push({link:document.location.pathname, text:getTitle()});
+    path = document.location.pathname;
+    if (options.allowURIQuery) {
+     path += document.location.search + document.location.hash;
+    }
+    breadCrumb.push({link:path, text:getTitle()});
     if (breadCrumb.trail.length > 0){
       $.cookie(cookieKey, JSON.stringify(breadCrumb.trail), options.cookieOptions);
       if (bcContainer.length > 0){

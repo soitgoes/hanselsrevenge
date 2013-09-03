@@ -16,6 +16,7 @@ function BreadCrumbTrail(options){
       breadCrumbSelector: "",
       maxDepth: 5,
       inheritLandingCrumbs: true,
+      allowURIQuery : false,
       cookieOptions: {
         path: "/"
       },
@@ -143,7 +144,10 @@ function BreadCrumbTrail(options){
     }else{
       breadCrumb.init(JSON.parse(val));
     }
-    path = document.location.pathname + document.location.search + document.location.hash;
+    path = document.location.pathname;
+    if (options.allowURIQuery) {
+     path += document.location.search + document.location.hash;
+    }
     breadCrumb.push({link:path, text:getTitle()});
     if (breadCrumb.trail.length > 0){
       $.cookie(cookieKey, JSON.stringify(breadCrumb.trail), options.cookieOptions);

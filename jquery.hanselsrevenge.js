@@ -10,7 +10,28 @@ jQuery.extend( jQuery.fn, {
         return jQuery(p).find(this).length > 0;
     }
 });
-
+var getRelativeUrl = function(absUrl){
+  var originPattern = /https?:\/\/.*?(\/.*?)($|\?|#)/;
+  var result = originPattern.exec(absUrl);
+  if (result){
+    return result[1];
+  }
+   return "/";
+}
+var getTitle = function(){
+    if (document.title) {
+      // Document title can infact contain JavaScript vulnerabilities,
+      // therefore we convert the html to text through an element inorder not
+      // to trigger the JavaScript.
+      var title = $('<title>').text(document.title);
+      return title.get(0).innerHTML;
+    }
+    var path = document.location.pathname;
+    if (path[path.length-1] === '/'){
+      path = path.substring(0, path.length -1); //remove trailing slash
+    }
+    return path.split('/').pop();
+}
 function BreadCrumbTrail(options){
   var defaultOptions = {
       breadCrumbSelector: "",
@@ -29,12 +50,18 @@ function BreadCrumbTrail(options){
   this.links = {};
 
   this.push = function(crumb){
-      if (this.links[crumb.link] !== true){
+      if (!this.links[crumb.link]){
         this.trail.push(crumb);
-        this.links[crumb.link] = true;
       }else{
         this.rewindToUrl(crumb.link);
+        //rebuild if there is a change in title
+        for (var i = 0 ; i < this.trail.length ; i++){
+          if (this.trail[i].link === getRelativeUrl(document.location.href)){
+            this.trail[i].text =  crumb.text;
+          }
+        }  
       }
+      this.links[crumb.link] = crumb.text;  
       if (this.trail.length > 3){
         //this.trail = this.trail.slice(0,3);
       }
@@ -47,7 +74,7 @@ function BreadCrumbTrail(options){
   this.init = function(trail){
     this.trail = trail;
     for (var i=0; i< trail.length; i++){
-      this.links[trail[i].link] = true;
+      this.links[trail[i].link] = trail[i].text;
     }
   }
 
@@ -61,7 +88,7 @@ function BreadCrumbTrail(options){
 (function ($) {
   $.fn.hanselsRevenge = function (options) {
     var breadCrumb = new BreadCrumbTrail(options);
-    var cookieKey = "hanselsrevenge";
+    var cookieKey = options.cookieKey || "hanselsrevenge";
     // If the library is called by $.fn.hanselsRevenge, then the library
     // expects the option.breadCrumbSelector to be passed. Otherwise use the
     // standard $(selector).hanselsRevenge();
@@ -92,14 +119,7 @@ function BreadCrumbTrail(options){
       return "";
     }
 
-    var getRelativeUrl = function(absUrl){
-      var originPattern = /https?:\/\/.*?(\/.*?)($|\?|#)/;
-      var result = originPattern.exec(absUrl);
-      if (result){
-        return result[1];
-      }
-       return "/";
-    }
+
     $("a").click(function(){
       //external links clear the cookie
       if (this.href && (getOrigin(this.href) !== document.location.protocol + "//" + document.location.host
@@ -110,23 +130,7 @@ function BreadCrumbTrail(options){
         $.removeCookie(cookieKey, options.cookieOptions);
       }
     })
-    var getTitle = function(){
-      if (typeof breadCrumb.options.titleCallback == "function") {
-        return breadCrumb.options.titleCallback();
-      }
-      if (document.title) {
-        // Document title can infact contain JavaScript vulnerabilities,
-        // therefore we convert the html to text through an element inorder not
-        // to trigger the JavaScript.
-        var title = $('<title>').text(document.title);
-        return title.get(0).innerHTML;
-      }
-      var path = document.location.pathname;
-      if (path[path.length-1] === '/'){
-        path = path.substring(0, path.length -1); //remove trailing slash
-      }
-      return path.split('/').pop();
-    }
+   
     var val = $.cookie(cookieKey);
     if (val === null){
       if (options.inheritLandingCrumbs){
@@ -148,7 +152,12 @@ function BreadCrumbTrail(options){
     if (options.allowURIQuery) {
      path += document.location.search + document.location.hash;
     }
-    breadCrumb.push({link:path, text:getTitle()});
+    var titleFx = getTitle;
+    if (typeof breadCrumb.options.titleCallback == "function") {
+      titleFx = breadCrumb.options.titleCallback;
+    }
+
+    breadCrumb.push({link:path, text:titleFx()});
     if (breadCrumb.trail.length > 0){
       $.cookie(cookieKey, JSON.stringify(breadCrumb.trail), options.cookieOptions);
       if (bcContainer.length > 0){
@@ -156,6 +165,7 @@ function BreadCrumbTrail(options){
         var depth = breadCrumb.trail.length > options.maxDepth ? options.maxDepth  : breadCrumb.trail.length;
         for (var i = depth-1; i >= 0; i--) {
               var item =  breadCrumb.trail.shift();
+              item.text = breadCrumb.links[item.link];
               (i == 0) ? bcContainer.append("<li>" + item.text + "</li>") : bcContainer.append("<li><a href='" + item.link + "'>" + item.text + "</a></li>");
         }
       }

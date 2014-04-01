@@ -88,7 +88,7 @@ function BreadCrumbTrail(options){
 (function ($) {
   $.fn.hanselsRevenge = function (options) {
     var breadCrumb = new BreadCrumbTrail(options);
-    var cookieKey = options.cookieKey || "hanselsrevenge";
+    var cookieKey = (options && options.cookieKey) ? options.cookieKey : "hanselsrevenge";
     // If the library is called by $.fn.hanselsRevenge, then the library
     // expects the option.breadCrumbSelector to be passed. Otherwise use the
     // standard $(selector).hanselsRevenge();
@@ -146,7 +146,11 @@ function BreadCrumbTrail(options){
         breadCrumb.init(options.defaultTrail || []);
       }
     }else{
-      breadCrumb.init(JSON.parse(val));
+      try {
+        breadCrumb.init(JSON.parse(val));    
+      }catch (err){
+        breadCrumb.init([]);
+      }
     }
     path = document.location.pathname;
     if (options.allowURIQuery) {

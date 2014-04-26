@@ -30,19 +30,25 @@ ul, ul li {
 .breadcrumbs {
 	height:2.3em;
 	border:1px solid #dedede;
-	}
+	display:inline-block;
+	overflow:hidden;
+	float:left;
+}
 .breadcrumbs li {
 	float:left;
 	line-height:2.3em;
 	color:#777;
 	list-style-type:none;
 	padding-left:.75em;
-	}		
+}
+.breadcrumbs li:last-child{
+    padding-right:10px;
+}		
 .breadcrumbs li a {
 	background:url(images/crumbs.gif) no-repeat right center;
 	display:block;
 	padding:0 15px 0 0;
-	}							
+}							
 .breadcrumbs li a:link,
 .breadcrumbs li a:visited {
 	color:#777;

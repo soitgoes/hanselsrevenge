@@ -35,6 +35,7 @@ var getTitle = function(){
 function BreadCrumbTrail(options){
   var defaultOptions = {
       breadCrumbSelector: "",
+      autoSize: true,
       maxDepth: 5,
       inheritLandingCrumbs: true,
       allowURIQuery : false,
@@ -100,6 +101,18 @@ function BreadCrumbTrail(options){
     }
     options = breadCrumb.options;
 
+    if (options.autoSize){
+      window.onresize = function(arg){
+        var w = $(document).width();
+        var breadcrumbWidth = bcContainer.width(); 
+        console.log("Dim:", w, breadcrumbWidth);
+        while (breadcrumbWidth > w){
+          $(bcContainer, "li").width = 10;
+          breadcrumbWidth = bcContainer.width();
+        }
+      }
+    }
+   
     var log = function(mesg) {
       if (options.debug && typeof console !== "undefined" && console.log) {
         console.log(mesg);
@@ -167,11 +180,22 @@ function BreadCrumbTrail(options){
       if (bcContainer.length > 0){
         bcContainer.html("");
         var depth = breadCrumb.trail.length > options.maxDepth ? options.maxDepth  : breadCrumb.trail.length;
-        for (var i = depth-1; i >= 0; i--) {
-              var item =  breadCrumb.trail.shift();
-              item.text = breadCrumb.links[item.link];
-              (i == 0) ? bcContainer.append("<li>" + item.text + "</li>") : bcContainer.append("<li><a href='" + item.link + "'>" + item.text + "</a></li>");
-        }
+         var totalWidth = 0;
+        for (var i = 0; i < depth ; i++) {
+          if (i !==0 ){
+
+          }
+          var item =  breadCrumb.trail.pop();
+          item.text = breadCrumb.links[item.link];
+          var domEl = (i == depth) ? $("<li>" + item.text + "</li>") : $("<li><a href='" + item.link + "'>" + item.text + "</a></li>");   
+          bcContainer.prepend(domEl);
+          totalWidth += domEl.width();
+          var containerWidth =bcContainer.parent().width(); 
+          if (totalWidth < containerWidth){
+            console.log("totalWidth:", totalWidth);
+            console.log("containerWidth", containerWidth);
+          }
+       }
       }
     }
   };

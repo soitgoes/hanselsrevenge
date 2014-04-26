@@ -17,13 +17,14 @@
   <link href="hanselsrevenge.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <ul class="breadcrumbs"><li><a href="/">Home</a></li><li>Revenge of Hansel</li></ul>
 <ul id="nav">
     <li><a href="documentation.htm">Documentation </a></li>
     <li><a href="default.htm">Back Story of Hansel's Revenge</a></li>
     <li><a href="story.htm">Hansel's Story</a></li>
     <li><a href="historical_breadcrumbs.htm">What are Historical Breadcrumbs</a></li>
   </ul>
+<div style="width:400px">
+  <ul class="breadcrumbs"><li><a href="/">Home</a></li><li>Revenge of Hansel</li></ul>
   <div id="content">
       <h1>History of Breadcrumb Navigation</h1>
       <p>
@@ -32,7 +33,7 @@
       <p>
         Maybe there were other considerations as well.  If you dynamically render the breadcrumbs on the server side then you can never cache take good advantage of caching.  If the user clicks links in the top navigation then the contextual sense of the path may be destroyed.  In any case, I believe I've answered all these concerns with this project.  I hope you enjoy.
       </p>
-      <h2>What is a Historical Breadcrumb?</h1>
+      <h2>What is a Historical Breadcrumb?</h2>
       <p>
         A historical breadcrumb is one that has the users history in the breadcrumb.  This solves the UI problem of the user having to use their back button.  Also in both applications and content web sites this can aid navigation without the extra effort of creating duplicate content or dynamically altering the breadcrumb based on the referrer.
       </p>
@@ -51,6 +52,7 @@
           Typically you would want the breadcrumb to expand so long as the user is clicking links in the content and in the left navigation.  However, if the user clicked on a top navigation item you would want to reset the trail as the top navigation may land you anywhere on the site in an unrelated path.
       </p>
   </div>
+</div>
   <div id="footer">
     <p><a href="https://www.google.com/search?q=historical+breadcrumbs">Google Link</a><p>
   </div>

@@ -38,11 +38,28 @@ ul, ul li {
 	float:right;
 	line-height:2.3em;
 	color:#777;
+	max-width: 90px;
+	text-overflow:ellipsis;
+	white-space: nowrap;
 	list-style-type:none;
 	padding-left:.75em;
 }
+.breadcrumbs li a {
+	max-width:80px;
+	display:block;
+	text-overflow:ellipsis;
+	overflow:hidden;
+}
+.breadcrumbs li:hover, .breadcrumbs li a:hover{
+	text-overflow:none;
+	overflow:none;
+	max-width: inherit;
+}
 .breadcrumbs li:first-child{
     padding-right:10px;
+    overflow:none;
+    text-overflow:none;
+    max-width: inherit;
 }		
 .breadcrumbs li a {
 	background:url(images/crumbs.gif) no-repeat right center;

@@ -18,24 +18,34 @@ var getRelativeUrl = function(absUrl){
   }
    return "/";
 }
-var getTitle = function(){
-    if (document.title) {
-      // Document title can infact contain JavaScript vulnerabilities,
-      // therefore we convert the html to text through an element inorder not
-      // to trigger the JavaScript.
-      var title = $('<title>').text(document.title);
-      return title.get(0).innerHTML;
-    }
+var getTitle = function(options){
+  var retVal;
+  if (document.title) {
+    // Document title can infact contain JavaScript vulnerabilities,
+    // therefore we convert the html to text through an element inorder not
+    // to trigger the JavaScript.
+    var title = $('<title>').text(document.title);
+    retVal = title.get(0).innerHTML;
+  }else{
     var path = document.location.pathname;
     if (path[path.length-1] === '/'){
       path = path.substring(0, path.length -1); //remove trailing slash
     }
-    return path.split('/').pop();
+    retVal = path.split('/').pop();
+  
+  }
+  if (options.ellipsisLongCrumbs){
+    if (retVal.length > 30){
+      retVal = retVal.substring(0, 30) + "...";    
+    }
+  }
+  return retVal;
 }
 function BreadCrumbTrail(options){
   var defaultOptions = {
       breadCrumbSelector: "",
       maxDepth: 5,
+      ellipsisLongCrumbs:false, 
       inheritLandingCrumbs: true,
       allowURIQuery : false,
       cookieOptions: {
@@ -174,7 +184,7 @@ function BreadCrumbTrail(options){
       titleFx = breadCrumb.options.titleCallback;
     }
 
-    breadCrumb.push({link:path, text:titleFx()});
+    breadCrumb.push({link:path, text:titleFx(options)});
     if (breadCrumb.trail.length > 0){
       $.cookie(cookieKey, JSON.stringify(breadCrumb.trail), options.cookieOptions);
       if (bcContainer.length > 0){

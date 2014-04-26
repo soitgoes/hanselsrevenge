@@ -35,7 +35,6 @@ var getTitle = function(){
 function BreadCrumbTrail(options){
   var defaultOptions = {
       breadCrumbSelector: "",
-      autoSize: true,
       maxDepth: 5,
       inheritLandingCrumbs: true,
       allowURIQuery : false,
@@ -101,14 +100,15 @@ function BreadCrumbTrail(options){
     }
     options = breadCrumb.options;
 
-    if (options.autoSize){
+    if (options.minWidthHide){
       window.onresize = function(arg){
         var w = $(document).width();
-        var breadcrumbWidth = bcContainer.width(); 
-        console.log("Dim:", w, breadcrumbWidth);
-        while (breadcrumbWidth > w){
-          $(bcContainer, "li").width = 10;
-          breadcrumbWidth = bcContainer.width();
+        var minWidth = parseInt(options.minWidthHide);
+        if (!minWidth){ console.error("Couldn't parse minWidthHide")}
+        if (w <= minWidth){
+          bcContainer.hide();
+        }else{
+          bcContainer.show();
         }
       }
     }
@@ -181,20 +181,13 @@ function BreadCrumbTrail(options){
         bcContainer.html("");
         var depth = breadCrumb.trail.length > options.maxDepth ? options.maxDepth  : breadCrumb.trail.length;
          var totalWidth = 0;
-        for (var i = 0; i < depth ; i++) {
-          if (i !==0 ){
-
-          }
-          var item =  breadCrumb.trail.pop();
+        for (var i = depth-1; i >= 0; i--) {
+          var item =  breadCrumb.trail.shift();
           item.text = breadCrumb.links[item.link];
-          var domEl = (i == depth) ? $("<li>" + item.text + "</li>") : $("<li><a href='" + item.link + "'>" + item.text + "</a></li>");   
+          var domEl = (i == 0) ? $("<li>" + item.text + "</li>") : $("<li><a href='" + item.link + "'>" + item.text + "</a></li>");   
           bcContainer.prepend(domEl);
           totalWidth += domEl.width();
-          var containerWidth =bcContainer.parent().width(); 
-          if (totalWidth < containerWidth){
-            console.log("totalWidth:", totalWidth);
-            console.log("containerWidth", containerWidth);
-          }
+          var containerWidth =bcContainer.parent().width();       
        }
       }
     }

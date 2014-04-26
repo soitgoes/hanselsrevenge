@@ -11,7 +11,18 @@
   <script type="text/javascript">
     var breadCrumbSelector = ".breadcrumbs";
     $(document).ready(function(){
-      $.fn.hanselsRevenge({breadCrumbSelector: breadCrumbSelector});
+      $.fn.hanselsRevenge({
+        breadCrumbSelector: breadCrumbSelector
+        //,minWidthHide:400 // Hides when width reduces past given document width threshold
+        //,maxDepth:5 //Max Depth (optional) defaults to 5.  Max Depth of the breadcrumb trail
+        //,inheritLandingCrumbs: true //Defaults to true.  If the breadcrumb selector on the page contains crumbs and there is no cookie yet then it will use those crumbs as a starting point.  If false then it will just start with the current page.
+        //,allowURIQuery : false //Defaults to true.  If true then this will treat different query strings as different pages.
+        //,cookieOptions: { path: "/" } //These are the options passed to jquery.cookie when the cookie is set.  You may wish to override the path or expire date.
+        //,debug:true //see console log output for diagnoising problems
+        //,titleCallback: function(title){  return title.replace(": Site Name", "")} //Allow the user to override the getTitle function
+        //,resetPattern : /resetBread$/ //Anyurl matching this pattern will reset the trail and utilize the landing options if available
+        //,resetContainer: $(".overrideBreadcrumb") //Links inside of this will reset the breadcrumbs to the trail within even if there are already crumbs in the cookie.
+      });
     });
   </script>
   <link href="hanselsrevenge.css" rel="stylesheet" type="text/css" />
@@ -22,11 +33,12 @@
     <li><a href="default.htm">Back Story of Hansel's Revenge</a></li>
     <li><a href="story.htm">Hansel's Story</a></li>
     <li><a href="historical_breadcrumbs.htm">What are Historical Breadcrumbs</a></li>
+  </ul>
   <ul class="breadcrumbs">
     <li><a href="default.htm">Home</a></li>
     <li>Documentation</li>
   </ul>
-  </ul>
+ 
   <div id="content">
       <h1>Getting Started with Hansel's Revenge</h1>
       <p>
@@ -41,17 +53,15 @@
 &lt;![endif]--&gt;
 &lt;script src="jquery.hanselsrevenge.js" type="text/javascript"&gt;&lt;/script&gt;
       </pre>
-      <ul>
-        <li>Be sure to check the options specified at the bottom of the jquery.hanselsrevenge.js file</li>
-        <li>Breadcrumbs being on nearly every page I decided to include this on the javascript file instead of requiring you to get it in the footer on every page.</li>
-        <li>If you don't like this approach feel free to copy out the call and put it in yourself on every page you want it to track and write</li>
-      </ul>
       <h1>All about options</h1>
       <p>There is a commented out example of at the bottom of jquery.hanselsrevenge.js which demonstrates some of the more advanced options</p>
       <dl>
         <dt>breadCrumbSelector</dt><dd>This is the selector that specifies your unordered list for which to write the breadcrumbs.  If no specified will assume .breadcrumbs</dd>
         <dt>maxDepth</dt><dd>This is the maximum number of crumbs which you would like to display to the user.  If not specified it will default to 5</dd>
         <dt>inheritLandingCrumbs</dt><dd>When there is no cookie and you land on a page we can inherit the crumbs that are already in the breadCrumbSelector into the history.  Defaults to true</dd>
+        <dt>minWidthHide</dt><dd>Out of the box Hansel's Revenge is responsive since version 2.0.0, but you may decide that breadCrumbs simply shouldn't show if the width hits the mobile range.</dd>
+        <dt>allowURIQuery</dt><dd>(optional) defaults to false.  If true then query strings will be treated as if they are separate pages. This would only be desirable if the title tags on these pages varied appropriately</dd>
+        <dt>titleCallback</dt><dd>(optional) function to override the function which gets the title of the page.  Must return a string.</dd>
         <dt>cookieOptions</dt><dd>For typical use no need to change the defaults but if you would like these are passed straight into jquery.cookie.  You can see the options for those <a href="https://github.com/carhartl/jquery-cookie">here</a></dd>
         <dt>resetContainer</dt><dd>jQuery object.  Any link that is found in this container causes the trail to reset.  This is useful if you don't want your top nav to keep the historical trail.</dd>
         <dt>resetPattern</dt><dd>Regex.  If you would like to ensure that urls of a certain pattern don't make it into your breadcrumbs you can utilize this regular expression pattern to do so.</dd>

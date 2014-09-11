@@ -38,7 +38,6 @@ ul, ul li {
 	float:right;
 	line-height:2.3em;
 	color:#777;
-	max-width: 90px;
 	text-overflow:ellipsis;
 	white-space: nowrap;
 	list-style-type:none;

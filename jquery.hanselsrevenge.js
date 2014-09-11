@@ -155,7 +155,7 @@ function BreadCrumbTrail(options){
     })
    
     var val = $.cookie(cookieKey);
-    if (val === null){
+    if (!val){
       if (options.inheritLandingCrumbs){
         //read the crumbs
         $("li a", bcContainer).each(function(){

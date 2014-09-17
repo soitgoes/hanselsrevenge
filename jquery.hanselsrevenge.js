@@ -108,6 +108,14 @@ function BreadCrumbTrail(options){
     else {
       var bcContainer = this;
     }
+    // $(window).resize(setTimeout(600, function() {
+    //     ellipses1 = $(":nth-child(2)", bcContainer)
+    //     if (ellipses1.length > 1){
+    //       console.log("resize")
+    //     }
+    //     if ($("a:hidden", bcContainer).length >0) {ellipses1.show()} else {ellipses1.hide()}    
+    // }))
+    bcContainer.addClass("btn-group btn-breadcrumb");
     options = breadCrumb.options;
 
     if (options.minWidthHide){
@@ -158,10 +166,10 @@ function BreadCrumbTrail(options){
     if (!val){
       if (options.inheritLandingCrumbs){
         //read the crumbs
-        $("li a", bcContainer).each(function(){
+        $("a", bcContainer).each(function(){
           breadCrumb.push({link:getRelativeUrl(this.href), text: this.innerHTML});
         })
-        var last = $("li:last-child", bcContainer);
+        var last = $("a:last-child", bcContainer);
         if (last){
           breadCrumb.push({link:document.location.pathname, text: last[0].innerHTML});
         }
@@ -192,9 +200,9 @@ function BreadCrumbTrail(options){
         var depth = breadCrumb.trail.length > options.maxDepth ? options.maxDepth  : breadCrumb.trail.length;
          var totalWidth = 0;
         for (var i = depth-1; i >= 0; i--) {
-          var item =  breadCrumb.trail.shift();
+          var item =  breadCrumb.trail.pop();
           item.text = breadCrumb.links[item.link];
-          var domEl = (i == 0) ? $("<li>" + item.text + "</li>") : $("<li><a href='" + item.link + "'>" + item.text + "</a></li>");   
+          var domEl = (i == 0) ? $("<a href='/' class='btn btn-default'><div>" + item.text + "</div></a>") : $("<a class='btn btn-default' href='" + item.link + "'><div>" + item.text + "</div></a>");   
           bcContainer.prepend(domEl);
           totalWidth += domEl.width();
           var containerWidth =bcContainer.parent().width();       

@@ -1,16 +1,5 @@
 ﻿/* Simple scalable breadcrumb by Veerle Pieters  http://veerle-v2.duoh.com/blog/comments/simple_scalable_css_based_breadcrumbs/ MODIFIED
 ------------------------------------------------------------------*/
-body {
-		background:url(images/hansels_revenge.jpg) no-repeat ;
-		padding-top:160px;
-	}
-dt{font-weight:bold;}
-ul, ul li {
-	list-style-type:none;
-	padding:0;
-	margin:0;
-}
-
 /* styles for breadcrumbs */
 
 /* Breadcrumbs from http://bootsnipp.com/snippets/featured/triangle-breadcrumbs-arrows */

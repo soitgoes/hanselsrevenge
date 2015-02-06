@@ -6,14 +6,22 @@ See a demo of how it works.  http://whiteboard-it.com/hanselsrevenge/default.htm
 
 ## Installation
 
+Hansel's Revenge is now on bower
+
+	bower install hanselsrevenge
+
+Preferably, you would have a gulp package setup to minify and combine your javascript into a package.  However if you don't you can add the references manually.
+
 Include the following script references
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-	<script src="jquery.cookie.js" type="text/javascript"></script>
+	<script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="bower_components/jquery.cookie/jquery.cookie.js" type="text/javascript"></script>
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="json2.js"></script>
+	<script type="text/javascript" src="bower_components/json2/json2.js"></script>
 	<![endif]-->
-	<script type="text/javascript" src="jquery.hanselsrevenge.js"></script>
+	<script src="jquery.hanselsrevenge.js" type="text/javascript"></script>
+ 
 
 
 Have a Breadcrumb structure which resembles the following on the page.  

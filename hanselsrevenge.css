@@ -4,25 +4,12 @@ body {
 		background:url(images/hansels_revenge.jpg) no-repeat ;
 		padding-top:160px;
 	}
-div#content{
-	float:left;	
-	margin-right:10px;
-	max-width:500px;
-}
-#nav{
-	float:left;
-	width:250px;
-	padding-top:15px;
-}
 dt{font-weight:bold;}
-#footer{
-	clear:both;
-}
 ul, ul li {
 	list-style-type:none;
 	padding:0;
 	margin:0;
-	}		
+}
 
 /* styles for breadcrumbs */
 

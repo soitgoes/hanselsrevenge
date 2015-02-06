@@ -2,50 +2,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>Story</title>
-  <script src="jquery-1.11.1.min.js" type="text/javascript"></script>
-  <script src="jquery.cookie.js" type="text/javascript"></script>
+  <script src="/bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/bower_components/jquery.cookie/jquery.cookie.js" type="text/javascript"></script>
   <!--[if lt IE 9]>
-<script type="text/javascript" src="json2.js"></script>
-  <![endif]-->
-  <script src="jquery.hanselsrevenge.js" type="text/javascript"></script>
-  <script src="bootstrap.min.js"></script>
-  <link href="bootstrap.min.css" rel="stylesheet"> 
-  <script type="text/javascript">
-    var breadCrumbSelector = ".breadcrumbs";
-    $(document).ready(function(){
-      $.fn.hanselsRevenge({breadCrumbSelector: breadCrumbSelector});
-    });
-  </script>
-  <link href="hanselsrevenge.css" rel="stylesheet" type="text/css" />  
+<script type="text/javascript" src="/bower_components/json2/json2.js"></script>
+<![endif]-->
+<script src="jquery.hanselsrevenge.js" type="text/javascript"></script>
+<script type="text/javascript">
+  var breadCrumbSelector = ".breadcrumbs";
+  $(document).ready(function(){
+    $.fn.hanselsRevenge({breadCrumbSelector: breadCrumbSelector});
+  });
+</script>
+<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+<link href="hanselsrevenge.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <ul id="nav">
-    <li><a href="documentation.htm">Documentation </a></li>
-    <li><a href="default.htm">Back Story of Hansel's Revenge</a></li>
-    <li><a href="story.htm">Hansel's Story</a></li>
-    <li><a href="historical_breadcrumbs.htm">What are Historical Breadcrumbs</a></li>
-  </ul>
-  <ul class="breadcrumbs">
-    <li><a href="default.htm">Hansel and Gredel</a></li>
-    <li>Story</li>
-  </ul>
-
-  
-  <div id="content">
-    <p>After Hansel and his sisters&quot; safe return from their adventure.  Gretel put things behind her and moved on Hansel had a great deal of anger which he did not have a proper outlet for given that the evil witch was dead.  With his life restored he sought something to blame for his truama and revenge on the crows that ate his breadcrumb trail back to safety became his sole obsession.
-    </p>
-    <p>
-      Just like most revenge plots, Hansel's began with an obsession.  The breadcrumb plan would've worked if the crows hadn't ruined his life for a cracker like indulgance.  Eager but patient, he began to study the crows from afar.  His initial assumption was that the crows were eating these breadcrumbs as a convient snack, but he quickly realized that it was far more sinister.  
-    </p>
-    <p>
-      Following the crows he realized that they weren't eating the breadcrumbs at all.  They were moving them... Rather then guide the visitor safely back on their trial they guided them to whatever local witch was offering the most trinkits for the visitors.  With many lost visitors in the forest Hansel had to devise a way to help.
-    </p>
-    <p>
-      Hansel wanted to give the control back to the visitor leaving them a perfect trail from which they came.  With renewed purpose to restore order to the world he devised a new system where he would record the location of the visitors breadcrumbs on a cookie and then restore them after the crows had done their deeds.  With the help of the squirrels he was able restore breadcrumbs throughout the forest and no one ever lost their way again and everyone lived happily ever after.
-    </p>
-  </div>   
-  <div id="footer">
-    <p><a href="https://www.google.com/search?q=historical+breadcrumbs">Google Link</a></p>
+  <div class="container-fluid">
+    <ul class="breadcrumbs">
+      <li><a href="default.htm">Hansel and Gredel</a></li>
+      <li>Story</li>
+    </ul>
+    <div class="row">
+      <div class="col-md-3">
+        <ul class="nav nav-stacked nav-pills">
+          <li><a href="documentation.htm">Documentation </a></li>
+          <li><a href="default.htm">Original Story</a></li>
+          <li><a href="story.htm">Hansel's Revenge</a></li>
+          <li><a href="historical_breadcrumbs.htm">What are Historical Breadcrumbs</a></li>
+        </ul>
+      </div>
+      <div id="content" class="col-md-9">
+        <h1>Hansel's Revenge</h1>
+        <p>After Hansel and his sisters&quot; safe return from their adventure.  Gretel put things behind her and moved on Hansel had a great deal of anger which he did not have a proper outlet for given that the evil witch was dead.  With his life restored he sought something to blame for his truama and revenge on the crows that ate his breadcrumb trail back to safety became his sole obsession.
+        </p>
+        <p>
+          Just like most revenge plots, Hansel's began with an obsession.  The breadcrumb plan would've worked if the crows hadn't ruined his life for a cracker like indulgance.  Eager but patient, he began to study the crows from afar.  His initial assumption was that the crows were eating these breadcrumbs as a convient snack, but he quickly realized that it was far more sinister.  
+        </p>
+        <p>
+          Following the crows he realized that they weren't eating the breadcrumbs at all.  They were moving them... Rather then guide the visitor safely back on their trial they guided them to whatever local witch was offering the most trinkits for the visitors.  With many lost visitors in the forest Hansel had to devise a way to help.
+        </p>
+        <p>
+          Hansel wanted to give the control back to the visitor leaving them a perfect trail from which they came.  With renewed purpose to restore order to the world he devised a new system where he would record the location of the visitors breadcrumbs on a cookie and then restore them after the crows had done their deeds.  With the help of the squirrels he was able restore breadcrumbs throughout the forest and no one ever lost their way again and everyone lived happily ever after.
+        </p>
+      </div>   
+    </div> 
+    <div id="footer" class="row">
+      <div class="col-md-12">
+        <p><a href="https://www.google.com/search?q=historical+breadcrumbs">Google Link</a></p>
+      </div>
+    </div>
   </div>
 </body>
 </html>

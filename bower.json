@@ -1,0 +1,31 @@
+{
+  "name": "hanselsrevenge",
+  "version": "2.0.0",
+  "homepage": "https://github.com/soitgoes/hanselsrevenge",
+  "authors": [
+    "Martin Murphy <martin.murphy@whiteboard-it.com>"
+  ],
+  "description": "Historical Breadcrumbs: the way the legend intended.",
+  "main": "jquery.hanselsrevenge.js",
+  "keywords": [
+    "jquery",
+    "breadcrumbs",
+    "javascript",
+    "historical"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "json2": "*",
+    "jquery": "*",
+    "jquery.cookie": "~1.4.1",
+    "bootstrap": "~3.3.2",
+    "font-awesome": "~4.3.0"
+  }
+}
